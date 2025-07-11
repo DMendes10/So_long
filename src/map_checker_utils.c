@@ -6,7 +6,7 @@
 /*   By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:37:49 by diomende          #+#    #+#             */
-/*   Updated: 2025/07/11 18:54:33 by diomende         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:21:10 by diomende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,46 @@ int	elements_check (t_data *data, int coin, int exit, int player)
 		return (1);
 }
 
-int	valid_path_check()
+int	valid_path_check(t_data *data)
+{
+	int x;
+	// int y;
+
+	x = 0;
+	if (!cpy_map (data))
+		return_error (5, data);
+	while (data->mapchecker[x])
+	{
+		printf ("%s\n", data->mapchecker[x]);
+		x++;
+	}
+	return (1);
+}
+
+int	cpy_map(t_data *data)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (data->map[x])
+		x++;
+	data->mapchecker = malloc (sizeof (char *) * (x + 1));
+	if (!data->mapchecker)
+		return (0);
+	while (y < x)
+	{
+		data->mapchecker[y] = malloc (sizeof (char) * (ft_strlen (data->map[0]) + 1)); // preciso de alocar mais um * no meu array e meter a null??
+		if (!data->mapchecker[y++])
+			return (0);
+	}
+	x = 0;
+	while (data->map[x])
+	{
+		ft_strlcpy (data->mapchecker[x], data->map[x], (ft_strlen (data->map[x]) + 1)); // preciso de alocar mais um * no meu array e meter a null??
+		x++;
+	}
+	data->mapchecker[x] = NULL;
+	return (1);
+}

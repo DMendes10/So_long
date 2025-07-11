@@ -6,7 +6,7 @@
 /*   By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 14:34:54 by diomende          #+#    #+#             */
-/*   Updated: 2025/07/11 18:53:29 by diomende         ###   ########.fr       */
+/*   Updated: 2025/07/11 19:20:01 by diomende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	read_map (int fd, t_data *data)
 
 	line = get_next_line(fd);
 	if (!line)
-		return_error (2);
+		return_error (2, NULL);
 	line_accumulator = ft_strdup("");
 	while (line)
 	{
@@ -36,13 +36,13 @@ void	read_map (int fd, t_data *data)
 void	map_checker(t_data *data)
 {
 	if (!shape_check (data))
-		return_error (3);
+		return_error (3, data);
 	if (!wall_check (data))
-		return_error (3);
+		return_error (3, data);
 	if (!elements_check (data, 0, 0, 0))
-		return_error (4);
+		return_error (4, data);
 	if (!valid_path_check (data))
-		return_error (5);
+		return_error (5, data);
 }
 
 
