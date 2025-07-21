@@ -6,7 +6,7 @@
 /*   By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:37:49 by diomende          #+#    #+#             */
-/*   Updated: 2025/07/11 20:21:10 by diomende         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:15:30 by diomende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ int	shape_check(t_data *data)
 	if (!data->map[2])
 		return (0);
 	else
+	{
+		data->map_height = i;
+		data->map_width = len;
 		return (1);
+	}
 }
 
 int	wall_check (t_data *data)
@@ -78,50 +82,47 @@ int	elements_check (t_data *data, int coin, int exit, int player)
 	}
 	if (player != 1 || exit != 1 || coin < 1)
 		return (0);
-	else
-		return (1);
+	data->total_pk = coin;
+	return (1);
 }
 
 int	valid_path_check(t_data *data)
 {
 	int x;
-	// int y;
+	int y;
 
-	x = 0;
+	y = 0;
 	if (!cpy_map (data))
-		return_error (5, data);
-	while (data->mapchecker[x])
+		return_error (5, &data);
+	player_position (data);
+	flood_fill (data, data->y_player, data->x_player);
+	while (data->mapchecker[y])
 	{
-		printf ("%s\n", data->mapchecker[x]);
-		x++;
+		x = 0;
+		while (data->mapchecker[y][x])
+		{
+			if (data->mapchecker[y][x] == 'E' || data->mapchecker[y][x] == 'C')
+				return (0);
+			x++;
+		}
+		y++;
 	}
 	return (1);
 }
 
-int	cpy_map(t_data *data)
+void	flood_fill (t_data *data, int y, int x)
 {
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	while (data->map[x])
-		x++;
-	data->mapchecker = malloc (sizeof (char *) * (x + 1));
-	if (!data->mapchecker)
-		return (0);
-	while (y < x)
-	{
-		data->mapchecker[y] = malloc (sizeof (char) * (ft_strlen (data->map[0]) + 1)); // preciso de alocar mais um * no meu array e meter a null??
-		if (!data->mapchecker[y++])
-			return (0);
-	}
-	x = 0;
-	while (data->map[x])
-	{
-		ft_strlcpy (data->mapchecker[x], data->map[x], (ft_strlen (data->map[x]) + 1)); // preciso de alocar mais um * no meu array e meter a null??
-		x++;
-	}
-	data->mapchecker[x] = NULL;
-	return (1);
+	if (data->mapchecker[y][x] == '1' || data->mapchecker[y][x] == 'D')
+		return;
+	if (data->mapchecker[y][x] == '0' || data->mapchecker[y][x] == 'C' || \
+	(data->mapchecker[y][x] == 'P' || data->mapchecker[y][x] == 'E'))
+		data->mapchecker[y][x] = 'D';
+	if (y > 0)
+		flood_fill (data, y - 1, x);
+	if (data->mapchecker[y + 1])
+		flood_fill (data, y + 1, x);
+	if (x > 0)
+		flood_fill (data, y, x - 1);
+	if (data->mapchecker[y][x + 1])
+		flood_fill (data, y, x + 1);
 }
