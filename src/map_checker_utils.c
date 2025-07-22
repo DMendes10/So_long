@@ -6,7 +6,7 @@
 /*   By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:37:49 by diomende          #+#    #+#             */
-/*   Updated: 2025/07/21 16:15:30 by diomende         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:16:39 by diomende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	shape_check(t_data *data)
 {
-	size_t len;
-	int i;
+	size_t	len;
+	int		i;
 
 	i = 1;
 	len = ft_strlen (data->map[0]);
 	while (data->map[i])
 	{
-		if (strlen (data->map[i]) != len)
+		if (ft_strlen (data->map[i]) != len)
 			return (0);
 		i++;
 	}
@@ -35,10 +35,10 @@ int	shape_check(t_data *data)
 	}
 }
 
-int	wall_check (t_data *data)
+int	wall_check(t_data *data)
 {
-	size_t len;
-	int i;
+	size_t	len;
+	int		i;
 
 	len = 0;
 	i = 1;
@@ -58,7 +58,7 @@ int	wall_check (t_data *data)
 	return (1);
 }
 
-int	elements_check (t_data *data, int coin, int exit, int player)
+int	elements_check(t_data *data, int coin, int exit, int player)
 {
 	int	x;
 	int	y;
@@ -83,13 +83,13 @@ int	elements_check (t_data *data, int coin, int exit, int player)
 	if (player != 1 || exit != 1 || coin < 1)
 		return (0);
 	data->total_pk = coin;
-	return (1);
+	return (elements_check_2 (data));
 }
 
 int	valid_path_check(t_data *data)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	if (!cpy_map (data))
@@ -110,11 +110,11 @@ int	valid_path_check(t_data *data)
 	return (1);
 }
 
-void	flood_fill (t_data *data, int y, int x)
+void	flood_fill(t_data *data, int y, int x)
 {
 	if (data->mapchecker[y][x] == '1' || data->mapchecker[y][x] == 'D')
-		return;
-	if (data->mapchecker[y][x] == '0' || data->mapchecker[y][x] == 'C' || \
+		return ;
+	if (data->mapchecker[y][x] == '0' || data->mapchecker[y][x] == 'C' ||
 	(data->mapchecker[y][x] == 'P' || data->mapchecker[y][x] == 'E'))
 		data->mapchecker[y][x] = 'D';
 	if (y > 0)

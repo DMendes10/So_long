@@ -6,18 +6,19 @@
 /*   By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:40:15 by diomende          #+#    #+#             */
-/*   Updated: 2025/07/21 19:26:37 by diomende         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:13:38 by diomende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	initialize_game (t_data *data)
+void	initialize_game(t_data *data)
 {
 	data->game.mlx = mlx_init();
 	if (!data->game.mlx)
 		return_error (6, &data);
-	data->game.win = mlx_new_window (data->game.mlx, 64 * data->map_width, 64 * data->map_height, "so_long");
+	data->game.win = mlx_new_window (data->game.mlx, 64 * data
+			->map_width, 64 * data->map_height, "so_long");
 	if (!data->game.win)
 	{
 		mlx_destroy_display(data->game.mlx);
@@ -27,22 +28,29 @@ void	initialize_game (t_data *data)
 	draw_map (data);
 }
 
-void	initialize_images (t_data *data)
+void	initialize_images(t_data *data)
 {
 	int	width;
 	int	height;
 
-	data->sprites.floor = mlx_xpm_file_to_image (data->game.mlx, "src/Sprites/floor.xpm", &width, &height);
-	data->sprites.player = mlx_xpm_file_to_image (data->game.mlx, "src/Sprites/P_down.xpm", &width, &height);
-	data->sprites.wall = mlx_xpm_file_to_image (data->game.mlx, "src/Sprites/wall.xpm", &width, &height);
-	data->sprites.collectable = mlx_xpm_file_to_image (data->game.mlx, "src/Sprites/trapinch.xpm", &width, &height);
-	data->sprites.exit = mlx_xpm_file_to_image (data->game.mlx, "src/Sprites/exit_open.xpm", &width, &height);
-	if (!data->sprites.floor || !data->sprites.player || !data->sprites.wall || !data->sprites.collectable 
-		|| !data->sprites.exit)
+	data->sprites.floor = mlx_xpm_file_to_image (
+			data->game.mlx, "src/Sprites/floor.xpm", &width, &height);
+	data->sprites.player = mlx_xpm_file_to_image (
+			data->game.mlx, "src/Sprites/P_down.xpm", &width, &height);
+	data->sprites.wall = mlx_xpm_file_to_image (
+			data->game.mlx, "src/Sprites/wall.xpm", &width, &height);
+	data->sprites.collectable = mlx_xpm_file_to_image (
+			data->game.mlx, "src/Sprites/trapinch.xpm", &width, &height);
+	data->sprites.exit = mlx_xpm_file_to_image (
+			data->game.mlx, "src/Sprites/exit_open.xpm", &width, &height);
+	data->sprites.exit_closed = mlx_xpm_file_to_image (
+			data->game.mlx, "src/Sprites/exit_closed.xpm", &width, &height);
+	if (!data->sprites.floor || !data->sprites.player || !data->sprites
+		.wall || !data->sprites.collectable || !data->sprites.exit)
 		return_error (7, &data);
 }
 
-void	draw_map (t_data *data)
+void	draw_map(t_data *data)
 {
 	int	y;
 	int	x;
@@ -55,13 +63,13 @@ void	draw_map (t_data *data)
 		{
 			if (data->map[y][x] == '1')
 				mlx_put_image_to_window(data->game.mlx, data->game.win,
-					 data->sprites.wall, x * 64, y * 64);
+					data->sprites.wall, x * 64, y * 64);
 			if (data->map[y][x] == '0')
 				mlx_put_image_to_window(data->game.mlx, data->game.win,
-					 data->sprites.floor, x * 64, y * 64);
+					data->sprites.floor, x * 64, y * 64);
 			if (data->map[y][x] == 'C')
 				mlx_put_image_to_window(data->game.mlx, data->game.win,
-					 data->sprites.collectable, x * 64, y * 64);
+					data->sprites.collectable, x * 64, y * 64);
 			x++;
 		}
 		y++;
@@ -69,7 +77,7 @@ void	draw_map (t_data *data)
 	draw_map2(data);
 }
 
-void	draw_map2 (t_data *data)
+void	draw_map2(t_data *data)
 {
 	int	y;
 	int	x;
@@ -82,15 +90,37 @@ void	draw_map2 (t_data *data)
 		{
 			if (data->map[y][x] == 'P')
 				mlx_put_image_to_window(data->game.mlx, data->game.win,
-					 data->sprites.player, x * 64, y * 64);
-			if (data->map[y][x] == 'E')
+					data->sprites.player, x * 64, y * 64);
+			if (data->map[y][x] == 'E' && data->game.exit_open == 1)
 				mlx_put_image_to_window(data->game.mlx, data->game.win,
-					 data->sprites.exit, x * 64, y * 64);
-			// if (data->map[y][x] == 'C')
-			// 	mlx_put_image_to_window(data->game->mlx, data->game->win,
-			// 		 data->sprites->, x * 64, y * 64);
+					data->sprites.exit, x * 64, y * 64);
+			if (data->map[y][x] == 'E' && data->game.exit_open == 0)
+				mlx_put_image_to_window(data->game.mlx, data->game.win,
+					data->sprites.exit_closed, x * 64, y * 64);
 			x++;
 		}
 		y++;
 	}
+}
+
+int	elements_check_2(t_data *data)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (data->map[x])
+	{
+		y = 0;
+		while (data->map[x][y])
+		{
+			if (data->map[x][y] != 'P' && data->map[x][y] != '1' && data->map[x]
+				[y] != '0' && data->map[x][y] != 'E' && data->map[x][y] != 'C')
+				return (0);
+			y++;
+		}
+		x++;
+	}
+	return (1);
 }

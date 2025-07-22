@@ -6,13 +6,13 @@
 /*   By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:14:27 by diomende          #+#    #+#             */
-/*   Updated: 2025/07/21 19:34:37 by diomende         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:00:45 by diomende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void return_error (int error_code, t_data **data)
+void	return_error(int error_code, t_data **data)
 {
 	if (error_code == 0)
 		ft_putstr_fd("Error\nCode 0: No valid map file was provided \n", 2);
@@ -35,9 +35,9 @@ void return_error (int error_code, t_data **data)
 	exit (0);
 }
 
-int main (int ac, char **av)
+int	main(int ac, char **av)
 {
-	int	fd;
+	int		fd;
 	t_data	*data;
 
 	if ((ac > 2 || ac == 1) || !ft_strnstr (av[1], ".ber", ft_strlen(av[1])))
@@ -49,8 +49,11 @@ int main (int ac, char **av)
 		return_error (1, &data);
 	read_map (fd, data);
 	close (fd);
+	exit_cordinates(data);
+	ft_printf ("Cach'Em All!!!!\n");
 	initialize_game (data);
 	mlx_hook (data->game.win, KeyPress, KeyPressMask, parse_inputs, data);
+	mlx_hook (data->game.win, DestroyNotify, NoEventMask, close_game, data);
 	mlx_loop (data->game.mlx);
 }
 
@@ -81,8 +84,8 @@ void	free_all(t_data *data)
 		mlx_destroy_image(data->game.mlx, data->sprites.player);
 	if (data->sprites.wall)
 		mlx_destroy_image(data->game.mlx, data->sprites.wall);
-	// if (data->sprites.exit_closed)
-	// 	mlx_destroy_image(data->game.mlx, data->sprites.exit_closed);
+	if (data->sprites.exit_closed)
+		mlx_destroy_image(data->game.mlx, data->sprites.exit_closed);
 	if (data->game.win)
 		mlx_destroy_window(data->game.mlx, data->game.win);
 	if (data->game.mlx)
