@@ -6,7 +6,7 @@
 /*   By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 14:34:54 by diomende          #+#    #+#             */
-/*   Updated: 2025/07/22 19:30:30 by diomende         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:18:11 by diomende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void	read_map(int fd, t_data *data)
 
 void	map_checker(t_data *data)
 {
+	if (!elements_check (data, 0, 0, 0))
+		return_error (4, &data);
 	if (!shape_check (data))
 		return_error (3, &data);
 	if (!wall_check (data))
 		return_error (3, &data);
-	if (!elements_check (data, 0, 0, 0))
-		return_error (4, &data);
 	if (!valid_path_check (data))
 		return_error (5, &data);
 }

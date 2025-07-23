@@ -6,7 +6,7 @@
 /*   By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:14:27 by diomende          #+#    #+#             */
-/*   Updated: 2025/07/22 19:00:45 by diomende         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:22:07 by diomende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,57 +50,10 @@ int	main(int ac, char **av)
 	read_map (fd, data);
 	close (fd);
 	exit_cordinates(data);
-	ft_printf ("Cach'Em All!!!!\n");
+	ft_printf ("Catch'Em All!!!!\n");
+	modify_collectables (data);
 	initialize_game (data);
 	mlx_hook (data->game.win, KeyPress, KeyPressMask, parse_inputs, data);
 	mlx_hook (data->game.win, DestroyNotify, NoEventMask, close_game, data);
 	mlx_loop (data->game.mlx);
-}
-
-void	free_array(char **s)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
-	{
-		free (s[i]);
-		i++;
-	}
-	free (s);
-}
-
-void	free_all(t_data *data)
-{
-	if (data->sprites.collectable)
-		mlx_destroy_image(data->game.mlx, data->sprites.collectable);
-	if (data->sprites.exit)
-		mlx_destroy_image(data->game.mlx, data->sprites.exit);
-	if (data->sprites.floor)
-		mlx_destroy_image(data->game.mlx, data->sprites.floor);
-	if (data->sprites.player)
-		mlx_destroy_image(data->game.mlx, data->sprites.player);
-	if (data->sprites.wall)
-		mlx_destroy_image(data->game.mlx, data->sprites.wall);
-	if (data->sprites.exit_closed)
-		mlx_destroy_image(data->game.mlx, data->sprites.exit_closed);
-	if (data->game.win)
-		mlx_destroy_window(data->game.mlx, data->game.win);
-	if (data->game.mlx)
-	{
-		mlx_destroy_display(data->game.mlx);
-		free (data->game.mlx);
-	}
-	free_maps (&data);
-}
-
-void	free_maps(t_data **data)
-{
-	if ((*data)->map)
-		free_array ((*data)->map);
-	if ((*data)->mapchecker)
-		free_array ((*data)->mapchecker);
-	free (*data);
 }

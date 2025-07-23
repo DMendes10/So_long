@@ -6,7 +6,7 @@
 #    By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 17:57:15 by diomende          #+#    #+#              #
-#    Updated: 2025/07/22 15:28:32 by diomende         ###   ########.fr        #
+#    Updated: 2025/07/23 15:59:45 by diomende         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ SRCS = $(SRC_DIR)/so_long.c \
        $(SRC_DIR)/map_reader.c \
        $(SRC_DIR)/map_checker_utils.c \
        $(SRC_DIR)/Initializer_utils.c \
-       $(SRC_DIR)/Inputs.c
+       $(SRC_DIR)/Inputs.c \
+       $(SRC_DIR)/complementary.c \
+	   $(SRC_DIR)/free_hub.c
 
 OBJS = $(SRCS:.c=.o)
 
