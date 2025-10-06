@@ -6,7 +6,7 @@
 /*   By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 17:36:32 by diomende          #+#    #+#             */
-/*   Updated: 2025/07/23 18:29:31 by diomende         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:31:03 by diomende         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	move_player(char key, t_data *data, int x, int y)
 		poke_tracker (data, new_cordinates, key);
 	if (new_cordinates == 'E' && data->game.exit_open == 1)
 	{
-		ft_printf ("You Caught'Em All!!!!");
+		ft_printf ("You Caught'Em All!!!!\n");
 		close_game (data);
 	}
 }

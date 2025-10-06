@@ -6,7 +6,7 @@
 #    By: diomende <diomende@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 17:57:15 by diomende          #+#    #+#              #
-#    Updated: 2025/07/23 15:59:45 by diomende         ###   ########.fr        #
+#    Updated: 2025/07/24 14:52:14 by diomende         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,12 @@ $(PRINTF):
 $(NAME): $(OBJS) $(MINILIBX) $(LIBFT) $(PRINTF)
 	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -L$(PRINTF_DIR) -lft -lftprintf $(MLX_FLAGS) -o $(NAME)
 
+download_minilibx:
+	git clone https://github.com/42Paris/minilibx-linux.git $(MINILIBX_DIR)
+
+clean_minilibx:
+	$(RM) -r $(MINILIBX_DIR)
+
 clean:
 	$(RM) $(OBJS)
 	$(MAKE) -C $(LIBFT_DIR) clean
@@ -60,4 +66,4 @@ fclean: clean
 	$(MAKE) -C $(PRINTF_DIR) fclean
 	$(MAKE) -C $(MINILIBX_DIR) clean
 
-re: fclean all
+re: fclean all clean mlx_download clean_minilibx
