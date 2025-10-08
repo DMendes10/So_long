@@ -1,6 +1,6 @@
 # So Long
+<img width="1157" height="758" alt="so_long" src="https://github.com/user-attachments/assets/10ebf785-2bba-4177-a9e8-2ef22a98e4a6" />
 
-<p align="center"> <img src="assets/so_long.png" alt="Project Screenshot" width="700"/> </p>
 
 `so_long` is a small 2D game built with the **MiniLibX** graphical library.
 The goal is simple: collect all the items, and reach the exit.
