@@ -1,5 +1,6 @@
 # So Long
 
+![Project screenshot](assets/so_long.png)
 `so_long` is a small 2D game built with the **MiniLibX** graphical library.
 The goal is simple: collect all the items, and reach the exit.
 
